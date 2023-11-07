@@ -3,6 +3,7 @@ import { Game } from "../../hooks/useGames";
 import PlatformIconsList from "../PlatformIcons/PlatformIconsList";
 import CriticScore from "../CriticScore/CriticScore";
 import Placeholder from "../../assets/No-Image-Placeholder.svg.webp"
+import Emoji from "../Emoji/Emoji";
 
 interface Props {
   game: Game;
@@ -13,12 +14,13 @@ function GameCard({ game }: Props) {
       <Image  height="150" src={game.background_image?game.background_image:Placeholder} />
 
       <CardBody>
-        <Heading fontSize='medium'  paddingY={2} overflow={"hidden"}>{game.name}</Heading>
+      
         <HStack justify={"space-between"}>
         <PlatformIconsList platforms={game.parent_platforms.map(p=> p.platform)}></PlatformIconsList>
-      
-        </HStack>
         <CriticScore score={game.metacritic}></CriticScore>
+        </HStack>
+        
+        <Heading fontSize='medium'  paddingY={2} overflow={"hidden"}>{game.name} {<Emoji rating={game.rating_top}></Emoji>}</Heading>
      
       </CardBody>
     </Card>
