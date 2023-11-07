@@ -6,45 +6,42 @@ export interface Platform {
   id: number;
   name: string;
   slug: string;
- 
 }
 
-export interface Game {
+export interface Genre {
   id: number;
   name: string;
-  background_image: string;
-  parent_platforms: { platform: Platform }[];
-  metacritic:number
+  image_background: string;
 }
 
-interface FetchGamesResponse {
+interface FetchGenresResponse {
   count: number;
-  results: Game[];
+  results: Genre[];
 }
-const useGames = () => {
-  const [games, setGames] = useState<Game[]>([]);
+const useGenres = () => {
+  const [genres, setGenres] = useState<Genre[]>([]);
   const [errors, setErrors] = useState([]);
-  const[isLoading, setLoading]= useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
-    setLoading(true)
+    setLoading(true);
     apiClient
-      .get<FetchGamesResponse>("/games", { signal: controller.signal })
+      .get<FetchGenresResponse>("/genres", { signal: controller.signal })
       .then((res) => {
-        setGames(res?.data?.results);
-         setLoading(false)
+        setGenres(res?.data?.results);
+        setLoading(false);
       })
       .catch((err) => {
         if (err instanceof CanceledError) return;
         setErrors(err);
-         setLoading(false)
+        setLoading(false);
       });
 
     return () => controller.abort();
   }, []);
 
-  return { games, errors, isLoading };
+  return { genres, errors, isLoading };
 };
 
-export default useGames;
+export default useGenres;

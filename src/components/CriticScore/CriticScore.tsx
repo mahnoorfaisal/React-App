@@ -1,10 +1,13 @@
+import { Badge } from '@chakra-ui/react'
 import React from 'react'
 
-function CriticScore() {
+interface Props{
+    score:number
+}
+function CriticScore({score}:Props) {
+    let color = score>75 ? 'green': score >60 ? 'yellow' :''
   return (
-    <div>
-      
-    </div>
+    <Badge fontSize='12px' paddingX={2} borderRadius='2px' colorScheme={color}>{score}</Badge>
   )
 }
 
